@@ -1,0 +1,10 @@
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\obj\Debug\MyWinFormsApp.csproj.AssemblyReference.cache
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\obj\Debug\WindowsFormsApp.Login_Page.resources
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\obj\Debug\MyWinFormsApp.Properties.Resources.resources
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\obj\Debug\MyWinFormsApp.csproj.GenerateResource.cache
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\obj\Debug\MyWinFormsApp.csproj.CoreCompileInputs.cache
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\bin\Debug\MyWinFormsApp.exe.config
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\bin\Debug\MyWinFormsApp.exe
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\bin\Debug\MyWinFormsApp.pdb
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\obj\Debug\MyWinFormsApp.exe
+C:\Users\quita\Desktop\MyWinFormsApp\MyWinFormsApp\obj\Debug\MyWinFormsApp.pdb
