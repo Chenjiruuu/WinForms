@@ -1,17 +1,16 @@
-﻿using System;
+using System;
 using System.Drawing;
-using System.Text.RegularExpressions;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp
 {
     public partial class Edit_Page : Form
     {
-        // UI Components
-        private Label[] Labels;
-        private TextBox[] TextBoxes;
+        private Student_Page studentPage;
         private ComboBox CourseCmb, YearCmb;
-        private Button SaveBtn;
+        private TextBox[] TextBoxes;
+        private System.Windows.Forms.Label[] Labels;
 
         private string[] FieldNames =
         {
@@ -19,28 +18,30 @@ namespace WindowsFormsApp
             "Course", "Year", "Guardian/Parent", "Guardian Contact", "Hobbies", "Nickname"
         };
 
-        public Edit_Page()
+        public Button SaveBtn { get; private set; }
+
+        public Edit_Page(Student_Page studentPage)
         {
+            this.studentPage = studentPage;
             InitializeCustomComponents();
+            LoadStudentData();
         }
 
         private void InitializeCustomComponents()
         {
-            // Form Settings
             this.Text = "Edit Student Profile";
             this.Size = new Size(500, 600);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
 
-            // Labels and Textboxes
-            Labels = new Label[FieldNames.Length];
+            Labels = new System.Windows.Forms.Label[FieldNames.Length]; // Initialize Labels array
             TextBoxes = new TextBox[FieldNames.Length - 2]; // Excluding Course & Year (ComboBoxes)
 
             int yOffset = 20;
             for (int i = 0; i < FieldNames.Length; i++)
             {
-                Labels[i] = new Label
+                Labels[i] = new System.Windows.Forms.Label
                 {
                     Text = FieldNames[i] + ":",
                     Location = new Point(20, yOffset),
@@ -101,17 +102,36 @@ namespace WindowsFormsApp
             Controls.Add(SaveBtn);
         }
 
-        // Prevent letters in Age and Contact fields
-        private void NumericOnly_KeyPress(object sender, KeyPressEventArgs e)
+        private void LoadStudentData()
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("Only numbers are allowed in this field.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            TextBoxes[0].Text = studentPage.StudentName;
+            TextBoxes[1].Text = studentPage.StudentAge.ToString();
+            TextBoxes[2].Text = studentPage.Address;
+            TextBoxes[3].Text = studentPage.ContactNumber;
+            TextBoxes[4].Text = studentPage.Email;
+            CourseCmb.SelectedItem = studentPage.Course;
+            YearCmb.SelectedItem = studentPage.Year;
+            TextBoxes[5].Text = studentPage.Guardian;
+            TextBoxes[6].Text = studentPage.GuardianContact;
+            TextBoxes[7].Text = studentPage.Hobbies;
+            TextBoxes[8].Text = studentPage.Nickname;
         }
 
-        // Save/Update Button Click Event
+        private void SaveStudentData()
+        {
+            studentPage.StudentName = TextBoxes[0].Text;
+            studentPage.StudentAge = int.Parse(TextBoxes[1].Text);
+            studentPage.Address = TextBoxes[2].Text;
+            studentPage.ContactNumber = TextBoxes[3].Text;
+            studentPage.Email = TextBoxes[4].Text;
+            studentPage.Course = CourseCmb.SelectedItem.ToString();
+            studentPage.Year = YearCmb.SelectedItem.ToString();
+            studentPage.Guardian = TextBoxes[5].Text;
+            studentPage.GuardianContact = TextBoxes[6].Text;
+            studentPage.Hobbies = TextBoxes[7].Text;
+            studentPage.Nickname = TextBoxes[8].Text;
+        }
+
         private void SaveBtn_Click(object sender, EventArgs e)
         {
             // Check required fields
@@ -129,13 +149,27 @@ namespace WindowsFormsApp
                 return;
             }
 
+            SaveStudentData();
+
             // Show success message
             MessageBox.Show("Profile successfully updated!", "Update Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            // Refresh Student_Page data
+            studentPage.LoadStudentData();
+
             // Close Edit_Page and return to Student_Page
-            Student_Page studentForm = new Student_Page();
-            studentForm.Show();
+            studentPage.Show();
             this.Close();
+        }
+
+
+        private void NumericOnly_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Only numbers are allowed in this field.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
